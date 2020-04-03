@@ -1,22 +1,22 @@
-package at.coon_and_friends_2020.ue2;
+package at.coon_and_friends_2020.ue3;
 
 import at.coon_and_friends.foundation.BaseMainClass;
 import at.coon_and_friends.foundation.FileUtil;
 import at.coon_and_friends.foundation.InputLinesHolder;
+import at.coon_and_friends.foundation.geom.DoublePoint;
 import org.pmw.tinylog.Logger;
 
+import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
-import java.util.stream.Collectors;
 
 import static at.coon_and_friends.foundation.Constants.*;
 
-public class UE2 extends BaseMainClass {
+public class UE3 extends BaseMainClass {
 
 	public static void main(String[] args) throws Exception {
 		String year = "20";
-		String level = "2";
+		String level = "3";
 		String inputDirectory = ROOT_DIRECTORY + year + "\\" + level + "\\in\\";
 		String outputDirectory = ROOT_DIRECTORY + year + "\\" + level + "\\out\\";
 
@@ -42,15 +42,9 @@ public class UE2 extends BaseMainClass {
 
 	private static void process(Path imagePath, InputLinesHolder inputLinesHolder, StringBuilder outputStringBuilder) {
 		Plan plan = new Plan(inputLinesHolder);
-
-		Set<Flight> distinctFlights = new HashSet<>(plan.flights);
-		Map<Object, Long> groupedFlights = distinctFlights.stream().collect(Collectors.groupingBy(f -> f.start + " " + f.destination, Collectors.counting()));
-
-		SortedMap<Object, Long> sortedFlights = new TreeMap<>((o1, o2) -> o1.toString().compareTo(o2.toString()));
-		sortedFlights.putAll(groupedFlights);
-
-		for(Map.Entry<Object, Long> entry : sortedFlights.entrySet()) {
-			outputStringBuilder.append(entry.getKey()).append(" ").append(entry.getValue()).append("\n");
+		
+		for(Location location : plan.locations) {
+			outputStringBuilder.append(location.getX()).append(" ").append(location.getY()).append(" ").append(location.getZ()).append("\n");
 		}
 	}
 }

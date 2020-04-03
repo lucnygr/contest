@@ -25,9 +25,20 @@ public class InputLinesHolder {
 		return scanner;
 	}
 
+	public Scanner getNextLineAsScanner(String delimiter) {
+		String line = inputLinesIterator.next();
+		Scanner scanner = new Scanner(line);
+		scanner.useDelimiter(delimiter);
+		return scanner;
+	}
+
 	public int getNextLineAsInt() {
 		String line = inputLinesIterator.next();
 		return Integer.parseInt(line);
 	}
 
+	public double getNextLineAsDouble() {
+		String line = inputLinesIterator.next();
+		return Double.parseDouble(line);
+	}
 }

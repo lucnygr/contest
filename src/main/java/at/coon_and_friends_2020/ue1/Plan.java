@@ -9,29 +9,18 @@ import java.util.Scanner;
 
 public class Plan extends BaseObjectClass {
 
-	public int rows;
-
-	public int columns;
-
-	public long[][] grid;
-	
-	public List<Long> gridFlat = new ArrayList<>();
+	public List<Location> locations;
 
 	public Plan(InputLinesHolder holder) {
-		Scanner scanner = holder.getNextLineAsScanner();
-		this.rows = scanner.nextInt();
-		this.columns = scanner.nextInt();
-		
-		grid = new long[rows][columns];
+		int number = holder.getNextLineAsInt();
 
-		for (int x = 0; x < this.rows; x++) {
-			scanner = holder.getNextLineAsScanner();
-			for (int y = 0; y < this.columns; y++) {
-				long height = scanner.nextLong();
-				this.grid[x][y] = height;
-				gridFlat.add(height);
-			}
+		List<Location> locations = new ArrayList<>();
 
+		for(int i = 0;i<number;i++) {
+			Location location = new Location(holder);
+			locations.add(location);
 		}
+
+		this.locations = locations;
 	}
 }

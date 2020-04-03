@@ -3,6 +3,7 @@ package at.coon_and_friends_2020.ue1;
 import at.coon_and_friends.foundation.BaseMainClass;
 import at.coon_and_friends.foundation.FileUtil;
 import at.coon_and_friends.foundation.InputLinesHolder;
+import at.coon_and_friends.foundation.geom.DoublePoint;
 import org.pmw.tinylog.Logger;
 
 import java.math.BigDecimal;
@@ -42,13 +43,21 @@ public class UE1 extends BaseMainClass {
 	private static void process(Path imagePath, InputLinesHolder inputLinesHolder, StringBuilder outputStringBuilder) {
 		Plan plan = new Plan(inputLinesHolder);
 		
-		long min = plan.gridFlat.stream().min(Long::compare).get();
-		long max = plan.gridFlat.stream().max(Long::compare).get();
-		double avg = Math.floor(((double) plan.gridFlat.stream().reduce(0L, Long::sum)) / plan.gridFlat.size());
+		int minTimestamp = plan.locations.stream().map(l -> l.timestamp).min(Integer::compare).get();
+		int maxTimestamp = plan.locations.stream().map(l -> l.timestamp).max(Integer::compare).get();
 
-	//	System.out.println(String.format("%s %s %", min, max, avg));
+		double minLatitude = plan.locations.stream().map(l -> l.point.x).min(Double::compare).get();
+		double maxLatitude = plan.locations.stream().map(l -> l.point.x).max(Double::compare).get();
+
+		double minLongitude = plan.locations.stream().map(l -> l.point.y).min(Double::compare).get();
+		double maxLongitude = plan.locations.stream().map(l -> l.point.y).max(Double::compare).get();
+
+		float maxAltitude = plan.locations.stream().map(l -> l.altitude).max(Float::compare).get();
 	
-		outputStringBuilder.append(min).append(" ").append(max).append(" ").append(new BigDecimal(avg).toPlainString());
+		outputStringBuilder.append(minTimestamp).append(" ").append(maxTimestamp).append("\n")
+				.append(minLatitude).append(" ").append(maxLatitude).append("\n")
+				.append(minLongitude).append(" ").append(maxLongitude).append("\n")
+				.append(maxAltitude);
 		
 	}
 }
