@@ -4,6 +4,8 @@ import at.coon_and_friends.foundation.geom.DoublePoint;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.List;
 
 public interface Drawable {
     default Point2D scale(Point2D point, int pixelBreitePoFeld) {
@@ -43,5 +45,9 @@ public interface Drawable {
         int y = row * pixelbreiteProFeld + 1;
         for (String line : text.split("\n"))
             graphics.drawString(line, column * pixelbreiteProFeld + 1, y += graphics.getFontMetrics().getHeight());
+    }
+
+    default Color getColor(double value, double maxValue){
+        return Color.getHSBColor((float) (value / maxValue), 1, 1);
     }
 }
