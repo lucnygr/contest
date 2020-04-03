@@ -27,7 +27,7 @@ public class UE2 extends BaseMainClass {
 		String inputDirectory = ROOT_DIRECTORY + year + "\\" + level + "\\in\\";
 		String outputDirectory = ROOT_DIRECTORY + year + "\\" + level + "\\out\\";
 
-		for (int nr = 0; nr <= 5; nr++) {
+		for (int nr = 0; nr <= 3; nr++) {
 			Logger.warn("---------------------------------------------------");
 			Logger.warn("Durchgang " + nr);
 
@@ -50,7 +50,7 @@ public class UE2 extends BaseMainClass {
 	private static void process(Path imagePath, InputLinesHolder inputLinesHolder, StringBuilder outputStringBuilder) throws IOException {
 		Plan plan = new Plan(inputLinesHolder);
 
-		plan.draw(imagePath, 10);
+		plan.draw(imagePath, 50);
 		
 		List<Cell> borderCells = plan.cells.stream().filter(c -> plan.isBorderCell(c)).sorted().collect(Collectors.toList());
 		borderCells.forEach(c -> Logger.info(c));

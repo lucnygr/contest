@@ -32,8 +32,8 @@ public class Cell extends BaseObjectClass implements Comparable<Cell>, Drawable 
 	}
 
 	@Override
-	public Color getCellBackgroundColor(int row, int column) {
-		return this.getColor(this.height, 50);
+	public double getColorValue() {
+		return this.height;
 	}
 
 	public Long getCountryId() {

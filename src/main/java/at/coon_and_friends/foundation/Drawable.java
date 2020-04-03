@@ -12,9 +12,9 @@ public interface Drawable {
         return new DoublePoint(point.getX() * pixelBreitePoFeld, point.getY() * pixelBreitePoFeld);
     }
 
-    default void draw(Graphics2D graphics, int column, int row, int pixelbreiteProFeld) {
+    default void draw(Graphics2D graphics, int column, int row, int pixelbreiteProFeld, double maxValue) {
         this.drawCell(graphics, column, row, pixelbreiteProFeld);
-        this.fillCellBackground(graphics, this.getCellBackgroundColor(column, row), column, row, pixelbreiteProFeld);
+        this.fillCellBackground(graphics, this.getCellBackgroundColor(column, row, maxValue), column, row, pixelbreiteProFeld);
         this.drawString(graphics, this.getFontColor(column, row), this.getDrawString(), column, row, pixelbreiteProFeld);
     }
 
@@ -23,8 +23,8 @@ public interface Drawable {
         graphics.drawRect(column * pixelbreiteProFeld, row * pixelbreiteProFeld, pixelbreiteProFeld, pixelbreiteProFeld);
     }
 
-    default Color getCellBackgroundColor(int column, int row) {
-        return Color.WHITE;
+    default Color getCellBackgroundColor(int column, int row, double maxValue) {
+        return Color.getHSBColor((float) (this.getColorValue() / maxValue), 1, 1);
     }
 
     default void fillCellBackground(Graphics2D graphics, Color backgroundColor, int column, int row, int pixelbreiteProFeld) {
@@ -49,5 +49,9 @@ public interface Drawable {
 
     default Color getColor(double value, double maxValue){
         return Color.getHSBColor((float) (value / maxValue), 1, 1);
+    }
+
+    default double getColorValue() {
+        return 0;
     }
 }
