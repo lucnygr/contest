@@ -23,7 +23,7 @@ public class UE5 extends BaseMainClass {
 		String inputDirectory = ROOT_DIRECTORY + year + "\\" + level + "\\in\\";
 		String outputDirectory = ROOT_DIRECTORY + year + "\\" + level + "\\out\\";
 
-		for (int nr = 3; nr <= 5; nr++) {
+		for (int nr = 4; nr <= 4; nr++) {
 			Logger.warn("---------------------------------------------------");
 			Logger.warn("Durchgang " + nr);
 
@@ -64,9 +64,22 @@ public class UE5 extends BaseMainClass {
 						}
 
 						Location locationB = flightB.calculatedPoints.get(locationAEntry.getKey() - i);
+						double distance = locationAEntry.getValue().getDistance(locationB);
+						if(distance <= 1000) {
+							continue;
+						}
+						if(distance >= plan.transferRange) {
+							int skipseconds = (int) (distance - plan.transferRange) / 300;
+							i += skipseconds;
+							Logger.debug("Skipping {}", skipseconds);
+							continue;
+						}
+
+						/*
 						if(!locationAEntry.getValue().isTransmittable(locationB, plan.transferRange)) {
 							continue;
 						}
+						*/
 
 						meetupTimestamps.add(locationAEntry.getKey());
 					}
